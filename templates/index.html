@@ -13,7 +13,7 @@
   </tr>
   <tr>
     <td>interval (ms)</td>
-    <td id="moInterval">100</td>
+    <td id="moInterval"></td>
   </tr>
 </table>
 
@@ -21,7 +21,7 @@
 if ('LinearAccelerationSensor' in window) {
   document.getElementById('moApi').innerHTML = 'Generic Sensor API';
 
-  let accelerometer = new LinearAccelerationSensor({frequency: 100});
+  let accelerometer = new LinearAccelerationSensor({frequency: 200});
   accelerometer.addEventListener('reading', e => {
     accelerationHandler(accelerometer, 'moAccel');
   });
@@ -32,7 +32,7 @@ if ('LinearAccelerationSensor' in window) {
 
   var onDeviceMotion = function (eventData) {
     accelerationHandler(eventData.acceleration, 'moAccel');
-    intervalHandler(100);
+    intervalHandler(eventData.interval);
   }
 
   window.addEventListener('devicemotion', onDeviceMotion, false);
