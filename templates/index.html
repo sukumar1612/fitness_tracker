@@ -13,7 +13,7 @@
     </tr>
     <tr>
         <td>interval (ms)</td>
-        <td id="moInterval">200</td>
+        <td id="moInterval">50</td>
     </tr>
 </table>
 
@@ -25,7 +25,7 @@
     if ('LinearAccelerationSensor' in window) {
         document.getElementById('moApi').innerHTML = 'Generic Sensor API';
 
-        let accelerometer = new LinearAccelerationSensor({frequency: 5});
+        let accelerometer = new LinearAccelerationSensor({frequency: 20});
         // number of times per second
         accelerometer.addEventListener('reading', e => {
             accelerationHandler(accelerometer, 'moAccel');
