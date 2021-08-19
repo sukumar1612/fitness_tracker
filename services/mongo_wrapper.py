@@ -20,9 +20,10 @@ class MongoDatabase:
     def authenticate(self, user_email, password):
         collection = "users"
         data = self.db[collection].find({"useremail": user_email, "password": password})
-        if data is None:
-            return False
-        return True
+        for i in data:
+            if i["useremail"] == user_email and i["password"] == password:
+                return True
+        return False
 
     def create_users(self, user_email, password):
         collection = "users"
@@ -44,4 +45,3 @@ class MongoDatabase:
     def print_data(data):
         for records in data:
             print(records)
-
