@@ -37,8 +37,9 @@ data1 = {"location_data": locations1,
 class Home(Resource):
     @login_required
     def get(self):
-        print(current_user.get_id())
-        return render_template('index.html')
+        #print(current_user.get_id())
+        html_headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('index.html'), 200, html_headers)
 
 
 @login_manager.user_loader
@@ -76,7 +77,7 @@ class DisplayUserData(Resource):
 
     @login_required
     def post(self):
-        print(request.get_json())
+        #print(request.get_json())
         return data1
 
 
@@ -88,7 +89,7 @@ def logout():
 
 
 api.add_resource(DisplayUserData, "/display-user-data/")
+api.add_resource(Home, "/")
 
 if __name__ == '__main__':
-    print(locations1)
-    app.run()
+    app.run(host="0.0.0.0")
