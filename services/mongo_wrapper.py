@@ -8,7 +8,7 @@ load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 
 class MongoDatabase:
-    CONNECTION_STRING = f'mongodb+srv://skadmin:skmongoadmin@skcluster0.qp29x.mongodb.net' \
+    CONNECTION_STRING = f'mongodb+srv://skadmin:{os.environ.get("password")}@skcluster0.qp29x.mongodb.net' \
                         f'/myFirstDatabase?retryWrites=true&w=majority'
     DATABASE = "fitness_data"
     COLLECTION = "inventory"
@@ -44,3 +44,4 @@ class MongoDatabase:
     def print_data(data):
         for records in data:
             print(records)
+
