@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button onclick="myFunction()" id="one">Start</button>
+
+<script>
+    function download(data, filename, type) {
+        var file = new Blob([data], {type: type});
+        if (window.navigator.msSaveOrOpenBlob) // IE10+
+            window.navigator.msSaveOrOpenBlob(file, filename);
+        else { // Others
+            var a = document.createElement("a"),
+                url = URL.createObjectURL(file);
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(function () {
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+            }, 0);
+        }
+    }
+
+    var x = [];
+    var flag = 0;
+
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function calculator() {
+        while (1) {
+            if (flag === 1) {
+                await sleep(200);
+                var y = [1, 2, 3, "\n"];
+                x.push(y);
+            } else {
+                await sleep(20);
+            }
+        }
+    }
+
+    async function myFunction() {
+        if (flag === 1) {
+            flag = 0;
+            document.getElementById("one").innerHTML = "start"
+
+            download(x, "data", "text/plain")
+            console.log(x)
+        } else {
+            flag = 1;
+            document.getElementById("one").innerHTML = "stop"
+            console.log(x)
+        }
+    }
+
+    calculator()
+</script>
+</body>
+</html>

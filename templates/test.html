@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #map {
+            width: 600px;
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+<div id='map'></div>
+<script>
+    var locations = [
+        [18.595948, 73.784044],
+        [18.596356, 73.784002],
+        [18.596855, 73.784024],
+        [18.597220, 73.784302],
+        [18.597176, 73.784826],
+        [18.597166, 73.785373],
+        [18.596605, 73.785523],
+        [18.596309, 73.785458],
+        [18.595902, 73.785361],
+        [18.595926, 73.784714]
+    ];
+
+    var map = L.map('map').setView([11.206051, 122.447886], 8);
+    mapLink =
+        '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+    L.tileLayer(
+        'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; ' + mapLink + ' Contributors',
+            maxZoom: 18,
+        }).addTo(map);
+
+    for (var i = 0; i < locations.length; i++) {
+        marker = new L.marker([locations[i][0], locations[i][1]]).addTo(map);
+    }
+    var polyline = L.polyline(locations, {color: 'blue'}).addTo(map);
+    map.fitBounds(polyline.getBounds());
+</script>
+</body>
+</html>
