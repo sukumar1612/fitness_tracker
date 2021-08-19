@@ -55,6 +55,7 @@ def login():
         password = request.form['password']
         print(database.CONNECTION_STRING)
         if database.authenticate(user_email=email, password=password):
+            print("__________________authenticated__________________")
             user = User(email)
             login_user(user)
             return redirect("/")
