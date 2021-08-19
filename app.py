@@ -53,7 +53,6 @@ def login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
-        print(database.CONNECTION_STRING)
         if database.authenticate(user_email=email, password=password):
             print("__________________authenticated__________________")
             user = User(email)

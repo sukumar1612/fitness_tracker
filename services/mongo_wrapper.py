@@ -4,19 +4,17 @@ import pymongo
 from dotenv import load_dotenv
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-#load_dotenv(os.path.join(BASE_DIR, '.env'))
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 
 class MongoDatabase:
-    CONNECTION_STRING = f'mongodb+srv://skadmin:skmongoadmin@skcluster0.qp29x.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+    CONNECTION_STRING = f'mongodb+srv://skadmin:{os.environ.get("password")}@skcluster0.qp29x.mongodb.net' \
+                        f'/myFirstDatabase?retryWrites=true&w=majority'
     DATABASE = "fitness_data"
     COLLECTION = "inventory"
 
     def __init__(self, connection_string=CONNECTION_STRING):
         self.client = pymongo.MongoClient(connection_string)
-        if not self.client:
-            print("failed to connect------------------", self.client)
-
         self.db = self.client[self.DATABASE]
 
     def authenticate(self, user_email, password):
@@ -47,3 +45,8 @@ class MongoDatabase:
     def print_data(data):
         for records in data:
             print(records)
+
+
+if __name__ == "__main__":
+    database = MongoDatabase()
+    print(database.authenticate(user_email="suku1612@gmail.com", password="admin123"))
