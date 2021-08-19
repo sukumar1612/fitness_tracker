@@ -23,15 +23,10 @@ if ('LinearAccelerationSensor' in window) {
 }
 
 function accelerationHandler(acceleration, targetId) {
-    var info, xyz = "[X, Y, Z]";
     var arr = [acceleration.x.toFixed(3), acceleration.y.toFixed(3), acceleration.z.toFixed(3), "\n"]
     if (flag === 1) {
         x.push(arr);
     }
-    info = xyz.replace("X", acceleration.x && acceleration.x.toFixed(3));
-    info = info.replace("Y", acceleration.y && acceleration.y.toFixed(3));
-    info = info.replace("Z", acceleration.z && acceleration.z.toFixed(3));
-    document.getElementById(targetId).innerHTML = info;
 }
 
 function download(data, filename, type) {
