@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, make_response, redirect, Resp
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from flask_restful import Api, Resource
 
+from machine_learning.walkvsrun import predict_data
 from models.user_model import User
 from services.mongo_wrapper import MongoDatabase
 
@@ -48,6 +49,12 @@ class Home(Resource):
         for i in loc:
             loc1.append(i)
         data1["location_data"] = loc1
+        # Saket's part
+        ml_data = predict_data(request.get_json()["accelerometer_data"])
+        data1["total_time"] = ml_data[0]
+        data1["walking"] = ml_data[1]
+        data1["running"] = ml_data[2]
+        # ---------- #
         database.insert_all_data(current_user.get_id(), data1)
         return make_response({"message": "ok"}, 200, html_headers)
 
@@ -115,9 +122,19 @@ class DisplayUserData(Resource):
     def post(self):
         data = database.get_data(current_user.get_id())
         loc = []
+        total_time = []
+        walking = []
+        running = []
         for rows in data:
             loc.append(rows['location_data'])
+            total_time.append(rows["total_time"])
+            walking.append(rows["walking"])
+            running.append(rows["running"])
+            print(rows)
         data1['location_data'] = loc
+        data1["total_time"] = total_time
+        data1['walking'] = walking
+        data1['running'] = running
         return data1
 
 

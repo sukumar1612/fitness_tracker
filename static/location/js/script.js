@@ -1,5 +1,13 @@
-function showMap(locations) {
+function showMap(value) {
+    var locations = location_data[value]
+    var total_time_data = total_time[value]
+    var walking_data = walking[value]
+    var running_data = running[value]
     document.getElementById('weathermap').innerHTML = "<div id='map' style='height: 400px'></div>";
+    document.getElementById("total_time").innerHTML = "total time :" + total_time_data
+    document.getElementById("walking").innerHTML = "walking :" + walking_data
+    document.getElementById("running").innerHTML = "running :" + running_data
+
     var map = new L.map('map').setView([11.206051, 122.447886], 8);
     mapLink =
         '<a href="http://openstreetmap.org">OpenStreetMap</a>';
@@ -30,17 +38,23 @@ async function forFetch(data) {
 }
 
 var location_data;
+var total_time;
+var walking;
+var running;
 
 async function Initialise() {
     const response = await forFetch({msg: "hello world"});
     let len = response['location_data'].length;
     location_data = response['location_data'];
+    total_time = response['total_time'];
+    walking = response['walking'];
+    running = response['running'];
     var element = document.body;
     for (let loc = 0; loc < len; loc++) {
         var table = document.getElementById("myTable");
         var row = table.insertRow(0);
         var cell1 = row.insertCell(0);
-        cell1.innerHTML = "<button value=" + loc + " onclick='showMap(location_data[this.value])' >run number : " + (loc + 1) + "</button>";
+        cell1.innerHTML = "<button value=" + loc + " onclick='showMap(this.value)' >run number : " + (loc + 1) + "</button>";
     }
 }
 
