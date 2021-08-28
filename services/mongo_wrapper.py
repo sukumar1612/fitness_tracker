@@ -35,11 +35,11 @@ class MongoDatabase:
         return self.db[user_email].find()
 
     def insert_all_data(self, user_email, data):
-        self.db[user_email].insert_one(data)
-        self.db[user_email].create_index([("location_data.location", pymongo.GEO2D)])
+        self.db[user_email].insert_one(data.copy())
+        self.db[user_email].create_index([("location_data", pymongo.GEO2D)])
 
     def find_data_near_me(self, user_email, coordinates):
-        return self.db[user_email].find({"location_data.location": {"$near": coordinates, "$maxDistance": 80}})
+        return self.db[user_email].find({"location_data": {"$near": coordinates, "$maxDistance": 80}})
 
     @staticmethod
     def print_data(data):

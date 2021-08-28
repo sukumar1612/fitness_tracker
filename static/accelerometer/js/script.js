@@ -1,5 +1,7 @@
 var x = [];
+var x1 = [];
 var flag = 0;
+
 if ('LinearAccelerationSensor' in window) {
     document.getElementById('moApi').innerHTML = 'Generic Sensor API';
 
@@ -23,11 +25,12 @@ if ('LinearAccelerationSensor' in window) {
 }
 
 function accelerationHandler(acceleration, targetId) {
-    var arr = [acceleration.x.toFixed(3), acceleration.y.toFixed(3), acceleration.z.toFixed(3), "\n"]
+    var arr = [acceleration.x.toFixed(3), acceleration.y.toFixed(3), acceleration.z.toFixed(3)]
     if (flag === 1) {
         x.push(arr);
     }
 }
+
 
 function download(data, filename, type) {
     var file = new Blob([data], {type: type});
@@ -55,11 +58,59 @@ async function myFunction() {
     if (flag === 1) {
         flag = 0;
         document.getElementById("one").innerHTML = "start"
-        download(x, "data", "text/plain")
+        console.log(x, x1)
+        //download(x, "data", "text/plain")
+        //download(x1, "data", "text/plain")
+        await forFetch(x, x1);
         x = []
+        x1 = []
     } else {
         flag = 1;
         document.getElementById("one").innerHTML = "stop"
-        console.log(x)
     }
+}
+
+async function geo_loc() {
+    if (flag === 1) {
+        navigator.geolocation.getCurrentPosition(success, error, options);
+    }
+}
+
+var options = {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0
+};
+
+function success(pos) {
+    var crd = pos.coords;
+    var arr1 = [crd.latitude, crd.longitude];
+    x1.push(arr1)
+}
+
+function error(err) {
+    console.warn(`ERROR(${err.code}): ${err.message}`);
+}
+
+async function geo_loc_exe() {
+    while (1) {
+        await geo_loc();
+        await sleep(1000);
+    }
+}
+
+async function forFetch(data, data1) {
+    var dict={
+        "accelerometer_data":data,
+        "location_data":data1
+    }
+    const fetchOptions = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dict),
+    };
+    console.log(window.location.href)
+    await fetch(window.location.href, fetchOptions);
 }

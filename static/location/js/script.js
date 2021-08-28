@@ -14,6 +14,7 @@ function showMap(locations) {
     }
     var polyline = L.polyline(locations, {color: 'blue'}).addTo(map);
     map.fitBounds(polyline.getBounds());
+    console.log(locations)
 }
 
 function f1() {

@@ -29,7 +29,7 @@ locations = [
 ]
 locations1 = [locations[0:i] for i in range(1, len(locations))]
 data1 = {"location_data": locations1,
-         "total_time": "hello",
+         "total_time": 0,
          "walking": 0,
          "running": 0}
 
@@ -37,9 +37,19 @@ data1 = {"location_data": locations1,
 class Home(Resource):
     @login_required
     def get(self):
-        #print(current_user.get_id())
         html_headers = {'Content-Type': 'text/html'}
         return make_response(render_template('index.html'), 200, html_headers)
+
+    @login_required
+    def post(self):
+        html_headers = {'Content-Type': 'application/json'}
+        loc = request.get_json()["location_data"]
+        loc1 = []
+        for i in loc:
+            loc1.append(i)
+        data1["location_data"] = loc1
+        database.insert_all_data(current_user.get_id(), data1)
+        return make_response({"message": "ok"}, 200, html_headers)
 
 
 @login_manager.user_loader
@@ -78,7 +88,11 @@ class DisplayUserData(Resource):
 
     @login_required
     def post(self):
-        #print(request.get_json())
+        data = database.get_data(current_user.get_id())
+        loc = []
+        for rows in data:
+            loc.append(rows['location_data'])
+        data1['location_data'] = loc
         return data1
 
 
