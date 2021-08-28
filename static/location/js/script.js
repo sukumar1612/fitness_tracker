@@ -14,35 +14,6 @@ function showMap(locations) {
     }
     var polyline = L.polyline(locations, {color: 'blue'}).addTo(map);
     map.fitBounds(polyline.getBounds());
-    console.log(locations)
-}
-
-function f1() {
-    var locations = [
-        [18.595948, 73.784044],
-        [18.596356, 73.784002],
-        [18.596855, 73.784024],
-        [18.597220, 73.784302],
-        [18.597176, 73.784826],
-        [18.597166, 73.785373],
-        [18.596605, 73.785523],
-        [18.596309, 73.785458],
-        [18.595902, 73.785361],
-        [18.595926, 73.784714]
-    ];
-
-
-    showMap(locations);
-}
-
-function f2() {
-    var locations = [
-        [18.595948, 73.784044],
-        [18.596356, 73.784002],
-        [18.596855, 73.784024],
-        [18.597220, 73.784302],
-    ];
-    showMap(locations);
 }
 
 async function forFetch(data) {
@@ -69,6 +40,11 @@ async function Initialise() {
         var table = document.getElementById("myTable");
         var row = table.insertRow(0);
         var cell1 = row.insertCell(0);
-        cell1.innerHTML = "<button value="+loc+" onclick='showMap(location_data[this.value])' >run number : "+(loc+1)+"</button>";
+        cell1.innerHTML = "<button value=" + loc + " onclick='showMap(location_data[this.value])' >run number : " + (loc + 1) + "</button>";
     }
+}
+
+
+function go_back() {
+    window.location.href = window.origin;
 }

@@ -58,9 +58,6 @@ async function myFunction() {
     if (flag === 1) {
         flag = 0;
         document.getElementById("one").innerHTML = "start"
-        console.log(x, x1)
-        //download(x, "data", "text/plain")
-        //download(x1, "data", "text/plain")
         await forFetch(x, x1);
         x = []
         x1 = []
@@ -100,9 +97,9 @@ async function geo_loc_exe() {
 }
 
 async function forFetch(data, data1) {
-    var dict={
-        "accelerometer_data":data,
-        "location_data":data1
+    var dict = {
+        "accelerometer_data": data,
+        "location_data": data1
     }
     const fetchOptions = {
         method: "POST",
@@ -113,4 +110,12 @@ async function forFetch(data, data1) {
     };
     console.log(window.location.href)
     await fetch(window.location.href, fetchOptions);
+}
+
+function show_run_details() {
+    window.location.href = "/display-user-data/"
+}
+
+function logout(){
+    window.location.href = "/logout"
 }
