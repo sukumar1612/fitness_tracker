@@ -28,7 +28,7 @@ locations = [
     [18.595926, 73.784714]
 ]
 locations1 = [locations[0:i] for i in range(1, len(locations))]
-data1 = {"location_data": locations1,
+data1 = {"location_data": [],
          "total_time": 0,
          "walking": 0,
          "running": 0}
@@ -72,10 +72,35 @@ def login():
             return {"message": "incorrect username/password"}
     else:
         return Response('''
+        <h1> LOGIN </h1>
         <form action="" method="post">
             <p><input type=text name=email>
             <p><input type=password name=password>
             <p><input type=submit value=Login>
+        </form>
+        <button onclick="register()">Register new user</button>
+        <script>
+            function register() {
+                window.location.href = "/register";
+            }
+        </script>
+        ''')
+
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        database.create_users(email, password)
+        return redirect("/")
+    else:
+        return Response('''
+        <h1> REGISTER </h1>
+        <form action="" method="post">
+            <p><input type=text name=email>
+            <p><input type=password name=password>
+            <p><input type=submit value=Register>
         </form>
         ''')
 
