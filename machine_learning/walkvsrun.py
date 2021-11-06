@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy
 def predict_data(data):
     df=pd.DataFrame(data)
     df['total_acc']=df[0]**2+df[1]**2+df[2]**2
