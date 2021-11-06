@@ -9,4 +9,5 @@ def predict_data(data):
     time_running=((20*len(x))/1000)*p
     p1=(x.count(0)/len(x))
     time_walking=((20*len(x))/1000)*p1
+    print([time_running+time_walking,time_walking,time_running])
     return [time_running+time_walking,time_walking,time_running]
