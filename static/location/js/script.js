@@ -47,8 +47,8 @@ async function Initialise() {
     let len = response['location_data'].length;
     location_data = response['location_data'];
     total_time = response['total_time'];
-    walking = response['walking'];
-    running = response['running'];
+    walking = response['running'];
+    running = response['walking'];
     var element = document.body;
     for (let loc = 0; loc < len; loc++) {
         var table = document.getElementById("myTable");
