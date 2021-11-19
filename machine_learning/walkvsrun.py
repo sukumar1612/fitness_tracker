@@ -1,16 +1,19 @@
+import os
 import joblib
 import pandas as pd
 
 
 def predict_data(data):
+    dirname = os.path.dirname(__file__)
+    filename = os.path.join(dirname, 'machine_learning/model_finale.sav')
     # predict_data([[-0.700,0.300,1.000],[-1.600,0.400,1.900],[-7.300,-11.400,0.700]])
     print(type(data[0][0]), "___________sdkjfsd______________")
     data = [list(map(float, i)) for i in data]
     print(type(data[0][0]), "___________sdkjfsd______________")
-
+    print("_________filename is :", filename)
     df = pd.DataFrame(data)
     df['total_acc'] = df[0] ** 2 + df[1] ** 2 + df[2] ** 2
-    cls = joblib.load('model_finale.sav')
+    cls = joblib.load(filename)
     d = df.to_numpy()
     x = cls.predict(d)
     x = list(x)
