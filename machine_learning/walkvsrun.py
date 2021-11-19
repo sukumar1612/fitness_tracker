@@ -3,6 +3,7 @@ import numpy
 import joblib
 def predict_data(data):
     #predict_data([[-0.700,0.300,1.000],[-1.600,0.400,1.900],[-7.300,-11.400,0.700]])
+    print(type(data[0][0]),"___________sdkjfsd______________")
     df=pd.DataFrame(data)
     df['total_acc']=df[0]**2+df[1]**2+df[2]**2
     cls=joblib.load('model_finale.sav')
